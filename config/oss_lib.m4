@@ -2,6 +2,16 @@
 ## Libs from SipFoundry
 ##
 
+AC_ARG_ENABLE(dep-check, 
+  AS_HELP_STRING([--disable-dep-check], 
+  [Do not check for dependencies other then those required for dist target]))
+
+AC_DEFUN([OSS_MISSING_DEP],[
+  if test "x$enable_dep_check" != "xno"; then
+    AC_MSG_ERROR([$1])
+  fi
+])
+
 ## Common C and C++ flags for oss related source
 AC_DEFUN([SFAC_INIT_FLAGS],
 [
@@ -106,49 +116,49 @@ AC_DEFUN([SFAC_LIB_CORE_FLAGS],
     #
     # Check if iproute2 is installed
     #
-    AC_CHECK_FILE(/sbin/ip, [OSS_IP_ROUTE_2="/sbin/ip"], [AC_MSG_ERROR("Install iproute2 package")])
+    AC_CHECK_FILE(/sbin/ip, [OSS_IP_ROUTE_2="/sbin/ip"], [OSS_MISSING_DEP("Install iproute2 package")])
     AC_SUBST(OSS_IP_ROUTE_2)
     CXXFLAGS="-DOSS_IP_ROUTE_2=\\\"$OSS_IP_ROUTE_2\\\" $CXXFLAGS"
 
     #
     # Check if iptables is installed
     #
-    AC_CHECK_FILE(/sbin/iptables, [OSS_IP_TABLES="/sbin/iptables"], [AC_MSG_ERROR("Install iptables package")])
+    AC_CHECK_FILE(/sbin/iptables, [OSS_IP_TABLES="/sbin/iptables"], [OSS_MISSING_DEP("Install iptables package")])
     AC_SUBST(OSS_IP_TABLES)
     CXXFLAGS="-DOSS_IP_TABLES=\\\"$OSS_IP_TABLES\\\" $CXXFLAGS"
 
     AC_CHECK_LIB(boost_thread, main, [BOOST_LIBS="-lboost_date_time -lboost_filesystem -lboost_system -lboost_thread -lboost_program_options -lboost_iostreams -lboost_regex"],
         [AC_CHECK_LIB(boost_thread-mt, main,
         [BOOST_LIBS="-lboost_date_time-mt -lboost_filesystem-mt -lboost_system-mt -lboost_thread-mt -lboost_program_options-mt -lboost_iostreams-mt -lboost_regex-mt"],
-        [AC_MSG_ERROR("no boost thread found")])])
+        [OSS_MISSING_DEP("no boost thread found")])])
     AC_SUBST(BOOST_LIBS)
 
 
     AC_CHECK_LIB(PocoFoundation, main,
         [POCO_LIBS="-lPocoFoundation -lPocoUtil -lPocoNet -lPocoXML"],
-        [AC_MSG_ERROR("Poco C++ Library not found")])
-    AC_CHECK_LIB(PocoUtil, main,[], [AC_MSG_ERROR("PocoUtil C++ Library not found")])
-    AC_CHECK_LIB(PocoNet, main,[], [AC_MSG_ERROR("PocoNet C++ Library not found")])
-    AC_CHECK_LIB(PocoXML, main,[], [AC_MSG_ERROR("PocoXML C++ Library not found")])
+        [OSS_MISSING_DEP("Poco C++ Library not found")])
+    AC_CHECK_LIB(PocoUtil, main,[], [OSS_MISSING_DEP("PocoUtil C++ Library not found")])
+    AC_CHECK_LIB(PocoNet, main,[], [OSS_MISSING_DEP("PocoNet C++ Library not found")])
+    AC_CHECK_LIB(PocoXML, main,[], [OSS_MISSING_DEP("PocoXML C++ Library not found")])
     AC_SUBST(POCO_LIBS)
 
-    AC_CHECK_LIB(hiredis, main, [], [AC_MSG_ERROR("Redis client library not found")])
-    AC_CHECK_LIB(config++, main, [], [AC_MSG_ERROR("libconfig C++ library not found")])
-    AC_CHECK_LIB(v8, main, [], [AC_MSG_ERROR("Google V8 Javascript engine not found")])
-    AC_CHECK_LIB(ltdl, main, [], [AC_MSG_ERROR("libltdl not found")])
-    AC_CHECK_LIB(mcrypt, main, [], [AC_MSG_ERROR("Mcrypt Encryption Library not found")])
-    AC_CHECK_LIB(ssl, main, [], [AC_MSG_ERROR("SSL Development Library not found")])
-    AC_CHECK_LIB(crypto, main, [], [AC_MSG_ERROR("libcrypto not found")])
-    AC_CHECK_LIB(pthread, main, [], [AC_MSG_ERROR("libpthread not found")])
-    AC_CHECK_LIB(dl, main, [], [AC_MSG_ERROR("libdl not found")])
-    AC_CHECK_LIB(rt, main, [], [AC_MSG_ERROR("librt not found")])
-    AC_CHECK_LIB(crypt, main, [], [AC_MSG_ERROR("libcrypt not found")])
-    AC_CHECK_LIB(resolv, main, [], [AC_MSG_ERROR("libresolv not found")])
-    AC_CHECK_LIB(pcap, main, [], [AC_MSG_ERROR("libpcap not found")])
-    AC_CHECK_LIB(gtest, main, [], [AC_MSG_ERROR("Google Test Framework not found")])
-    AC_CHECK_LIB(xmlrpc, main, [], [AC_MSG_ERROR("XML RPC C Foundation classes not found")])
-    AC_CHECK_LIB(xmlrpc_client++, main, [], [AC_MSG_ERROR("XML RPC C++ client classes not found")])
-    AC_CHECK_LIB(xmlrpc_server_abyss++, main, [], [AC_MSG_ERROR("XML RPC C++ server classes not found")])
+    AC_CHECK_LIB(hiredis, main, [], [OSS_MISSING_DEP("Redis client library not found")])
+    AC_CHECK_LIB(config++, main, [], [OSS_MISSING_DEP("libconfig C++ library not found")])
+    AC_CHECK_LIB(v8, main, [], [OSS_MISSING_DEP("Google V8 Javascript engine not found")])
+    AC_CHECK_LIB(ltdl, main, [], [OSS_MISSING_DEP("libltdl not found")])
+    AC_CHECK_LIB(mcrypt, main, [], [OSS_MISSING_DEP("Mcrypt Encryption Library not found")])
+    AC_CHECK_LIB(ssl, main, [], [OSS_MISSING_DEP("SSL Development Library not found")])
+    AC_CHECK_LIB(crypto, main, [], [OSS_MISSING_DEP("libcrypto not found")])
+    AC_CHECK_LIB(pthread, main, [], [OSS_MISSING_DEP("libpthread not found")])
+    AC_CHECK_LIB(dl, main, [], [OSS_MISSING_DEP("libdl not found")])
+    AC_CHECK_LIB(rt, main, [], [OSS_MISSING_DEP("librt not found")])
+    AC_CHECK_LIB(crypt, main, [], [OSS_MISSING_DEP("libcrypt not found")])
+    AC_CHECK_LIB(resolv, main, [], [OSS_MISSING_DEP("libresolv not found")])
+    AC_CHECK_LIB(pcap, main, [], [OSS_MISSING_DEP("libpcap not found")])
+    AC_CHECK_LIB(gtest, main, [], [OSS_MISSING_DEP("Google Test Framework not found")])
+    AC_CHECK_LIB(xmlrpc, main, [], [OSS_MISSING_DEP("XML RPC C Foundation classes not found")])
+    AC_CHECK_LIB(xmlrpc_client++, main, [], [OSS_MISSING_DEP("XML RPC C++ client classes not found")])
+    AC_CHECK_LIB(xmlrpc_server_abyss++, main, [], [OSS_MISSING_DEP("XML RPC C++ server classes not found")])
 
     OSS_CORE_DEP_LIBS=""
     OSS_CORE_DEP_LIBS+=" -lhiredis "
