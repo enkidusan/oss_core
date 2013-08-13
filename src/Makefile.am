@@ -129,6 +129,46 @@ liboss_core_la_CXXFLAGS =
 	-DOSSAPP_LIB_VERSION=\"@OSS_CORE_VERSION_FULL@\" \
 	-fno-gcse -O0 -fno-implement-inlines -fno-default-inline 
 
+WEBSOCKET_SRC = \
+    ws/src/base64/base64.cpp \
+    ws/src/md5/md5.c \
+    ws/src/messages/data.cpp \
+    ws/src/network_utilities.cpp \
+    ws/src/processors/hybi_header.cpp \
+    ws/src/processors/hybi_util.cpp \
+    ws/src/sha1/sha1.cpp \
+    ws/src/uri.cpp \
+    ws/src/common.hpp \
+    ws/src/connection.hpp \
+    ws/src/endpoint.hpp \
+    ws/src/network_utilities.hpp \
+    ws/src/shared_const_buffer.hpp \
+    ws/src/uri.hpp \
+    ws/src/websocket_frame.hpp \
+    ws/src/websocketpp.hpp \
+    ws/src/base64/base64.h \
+    ws/src/http/parser.hpp \
+    ws/src/http/constants.hpp \
+    ws/src/logger/logger.hpp \
+    ws/src/md5/md5.h \
+    ws/src/md5/md5.hpp \
+    ws/src/messages/control.hpp \
+    ws/src/messages/data.hpp \
+    ws/src/processors/hybi.hpp \
+    ws/src/processors/hybi_header.hpp \
+    ws/src/processors/hybi_legacy.hpp \
+    ws/src/processors/hybi_util.hpp \
+    ws/src/processors/processor.hpp \
+    ws/src/rng/blank_rng.hpp \
+    ws/src/rng/boost_rng.hpp \
+    ws/src/roles/client.hpp \
+    ws/src/roles/server.hpp \
+    ws/src/sha1/sha1.h \
+    ws/src/sockets/plain.hpp \
+    ws/src/sockets/socket_base.hpp \
+    ws/src/sockets/tls.hpp \
+    ws/src/utf8_validator/utf8_validator.hpp
+
 liboss_core_la_SOURCES =  \
     boost_pch.hpp \
     DNS.cpp \
@@ -286,44 +326,12 @@ liboss_core_la_SOURCES =  \
     sipfsm/SIPWebSocketConnection.cpp \
     sipfsm/SIPWebSocketListener.cpp \
     sipfsm/SIPWebSocketConnectionManager.cpp \
-    ws/src/base64/base64.cpp \
-    ws/src/md5/md5.c \
-    ws/src/messages/data.cpp \
-    ws/src/network_utilities.cpp \
-    ws/src/processors/hybi_header.cpp \
-    ws/src/processors/hybi_util.cpp \
-    ws/src/sha1/sha1.cpp \
-    ws/src/uri.cpp \
-    ws/src/common.hpp \
-    ws/src/connection.hpp \
-    ws/src/endpoint.hpp \
-    ws/src/network_utilities.hpp \
-    ws/src/shared_const_buffer.hpp \
-    ws/src/uri.hpp \
-    ws/src/websocket_frame.hpp \
-    ws/src/websocketpp.hpp \
-    ws/src/base64/base64.h \
-    ws/src/http/parser.hpp \
-    ws/src/http/constants.hpp \
-    ws/src/logger/logger.hpp \
-    ws/src/md5/md5.h \
-    ws/src/md5/md5.hpp \
-    ws/src/messages/control.hpp \
-    ws/src/messages/data.hpp \
-    ws/src/processors/hybi.hpp \
-    ws/src/processors/hybi_header.hpp \
-    ws/src/processors/hybi_legacy.hpp \
-    ws/src/processors/hybi_util.hpp \
-    ws/src/processors/processor.hpp \
-    ws/src/rng/blank_rng.hpp \
-    ws/src/rng/boost_rng.hpp \
-    ws/src/roles/client.hpp \
-    ws/src/roles/server.hpp \
-    ws/src/sha1/sha1.h \
-    ws/src/sockets/plain.hpp \
-    ws/src/sockets/socket_base.hpp \
-    ws/src/sockets/tls.hpp \
-    ws/src/utf8_validator/utf8_validator.hpp
+    $(WEBSOCKET_SRC)
+
+$(WEBSOCKET_SRC) :
+	cd $(top_srcdir); \
+	  git submodule init; \
+	  git submodule update
 
 if ENABLE_TURN
     liboss_core_la_SOURCES += net/TurnServer.cpp
