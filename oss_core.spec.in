@@ -154,10 +154,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/liboss_core.so*
 %attr(755,root,root) %{_libdir}/liboss_carp.la
 %attr(755,root,root) %{_libdir}/liboss_carp.so*
-%attr(755,root,root) %{_libdir}/liboss_turn.la
-%attr(755,root,root) %{_libdir}/liboss_turn.a
-%attr(755,root,root) %{_libdir}/liboss_turn.so*
-
 
 %files devel
 %defattr(644,root,root,755)
