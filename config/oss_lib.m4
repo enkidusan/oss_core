@@ -194,21 +194,21 @@ AC_DEFUN([SFAC_LIB_CORE_FLAGS],
     AC_CHECK_LIB([event_pthreads], [main], [], libevent_thread_found=no)
 
     AM_CONDITIONAL([ENABLE_TURN], false)
-    if test "x$libevent_thread" = "xno" -a "x$libevent_thread" = "xno"; then
-        echo "libevent 2 not found.  Disabling TURN compilation"
-    else
-        if test "x$libevent_thread_found" = "xno" -a "x$libevent_thread_found" = "xno"; then
-            echo "libevent 2 not found.  Disabling TURN compilation"
-        else
-            if test "x$libevent_ssl_found" = "xno" -a "x$libevent_ssl_found" = "xno"; then
-               echo "libevent 2 not found.  Disabling TURN compilation"
-            else
-               echo "TURN compilation enabled"
-               AM_CONDITIONAL([ENABLE_TURN], true)
-               AC_DEFINE([ENABLE_TURN], [1], [Flags TURN compilation due to the presence of libevent 2])
-            fi
-        fi
-    fi
+    #if test "x$libevent_thread" = "xno" -a "x$libevent_thread" = "xno"; then
+    #    echo "libevent 2 not found.  Disabling TURN compilation"
+    #else
+    #    if test "x$libevent_thread_found" = "xno" -a "x$libevent_thread_found" = "xno"; then
+    #        echo "libevent 2 not found.  Disabling TURN compilation"
+    #    else
+    #        if test "x$libevent_ssl_found" = "xno" -a "x$libevent_ssl_found" = "xno"; then
+    #           echo "libevent 2 not found.  Disabling TURN compilation"
+    #        else
+    #           echo "TURN compilation enabled"
+    #           AM_CONDITIONAL([ENABLE_TURN], true)
+    #           AC_DEFINE([ENABLE_TURN], [1], [Flags TURN compilation due to the presence of libevent 2])
+    #        fi
+    #    fi
+    #fi
 
     AC_SUBST(OSS_CORE_DEP_LIBS, "$BOOST_LIBS $POCO_LIBS $OSS_CORE_DEP_LIBS")
 
